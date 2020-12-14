@@ -18,7 +18,7 @@ setuptools.setup(
     install_requires=install_requires,
     packages=setuptools.find_packages(),
     classifiers=[
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: GNU General Public License",
         "Operating System :: OS Independent",
     ],
