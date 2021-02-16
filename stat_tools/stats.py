@@ -1,5 +1,7 @@
 #This method contains methods for statistical analyses
 
+import numpy as np
+
 def mat_mean(mat):
     """
     This method computes the mean value of a diagonally

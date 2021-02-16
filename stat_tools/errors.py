@@ -1,5 +1,7 @@
 #This module contains methods for error and covariance analyses.
 
+import numpy as np
+
 def vec_cov(x, y, normed = False):
     """
     This method computes the covariance between vectors x and y.
@@ -189,3 +191,36 @@ def boostrap_mean_err(data, nrands = 100):
     err = np.std(means)
     mean_resamples = np.mean(means)
     return mean, err, mean_resamples
+
+def chi_square(var_1, err_1, var_2, err_2, use_err = True):
+    """
+    This method calculates chi2 value of two between two variables with their errors.
+
+    Parameters:
+    -----------
+    var_1: np.array
+        Values of the first variable
+    err_1: np.array
+        Errors on the first variable
+    var_2: np.array
+        Values of the second variable
+    err_2: np.array
+        Errors on the second variable
+    use_err: if False, errors are ignored in the calculation.
+
+    Returns:
+    --------
+    chi2: float
+        Chi square value between the two variables
+    """
+    if var_1.shape == err_1.shape and var_1.shape == var_2.shape and var_1.shape == err_2.shape:
+        mask = np.isfinite(var_1)&np.isfinite(var_2)
+        if use_err:
+            mask = mask&np.isfinite(err_1)&np.isfinite(err_2)
+            chi2 = np.mean((var_1[mask] - var_2[mask])**2. /(err_1[mask]**2. + err_2[mask]**2))
+            return chi2
+        else:
+            chi2 = np.mean((var_1[mask] - var_2[mask])**2.)
+            return chi2
+    else:
+        print("All the variables of chi_square must have the same shape")

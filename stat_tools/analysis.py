@@ -1,5 +1,7 @@
 #This module contains methods for data Analysis
 
+import numpy as np
+
 def SVD(X):
     """
     This method Whitens data by doing Singular Value Decomposition.
