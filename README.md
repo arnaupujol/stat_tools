@@ -11,6 +11,7 @@ Software requirements:
 All the packages that are required so that all the codes can run are:
 - numpy
 - scipy
+- pandas
 
 Installation:
 ----------------------
