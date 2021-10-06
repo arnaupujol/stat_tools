@@ -17,8 +17,8 @@ def count_time_label(dataframe, time_label, label, time_bins = 5, \
         Name of variable involving time values
     label: str
         Name of label to be selected
-    time_bins: int
-        Number of bins to cut the date times
+    time_bins: int or list
+        Number of bins to cut the date times (int) or time bin edges (list)
     mean_dates: bool
         If True, the mean date per time bin is given instead of
         the time range
@@ -34,7 +34,14 @@ def count_time_label(dataframe, time_label, label, time_bins = 5, \
     """
     if ignore_nulls:
         dataframe = dataframe[dataframe[label].notnull()]
-    out, time_edges = pd.cut(dataframe[time_label], time_bins, retbins=True)
+    if type(time_bins) is int:
+        out, time_edges = pd.cut(dataframe[time_label], time_bins, retbins=True)
+    elif len(time_bins) > 1:
+        time_edges = time_bins
+        time_bins = len(time_edges) - 1
+    else:
+        if verboe:
+            print("Error: incorrect assignment of time_bins (int or list): " + str(time_bins))
     table_sizes = {}
     for i in range(time_bins):
         mask = (dataframe[time_label] >= time_edges[i])&(dataframe[time_label] < time_edges[i + 1])
@@ -122,7 +129,7 @@ def labels_nd(dataframe, label_1, label_list, show_total = False, ignore_nulls =
         else:
             table_sizes = pd.merge(table_sizes, labels_2d(dataframe, label_1, l, ignore_nulls=ignore_nulls, \
                                                              show_total=show_total), left_index = True, \
-                               right_index = True)
+                               right_index = True, how = 'outer')
             if show_total:
                 table_sizes = table_sizes.rename(columns={'Total' : 'Total ' + l})
     return table_sizes
