@@ -27,3 +27,23 @@ def smooth(dataframe, size = 15, center = True, win_type = 'boxcar'):
     """
     smooth_df = dataframe.rolling(size, center = center, win_type = win_type).mean()
     return smooth_df
+
+def convolve_ones(data, kernel_size):
+    """
+    This method convolves the data with a tophat kernel.
+
+    Parameters:
+    -----------
+    data: np.array
+        Array with data values
+    kernel_size: int
+        Size of kernel
+
+    Returns:
+    --------
+    data_convolved: np.array
+        Convolved data
+    """
+    kernel = np.ones(kernel_size) / kernel_size
+    data_convolved = np.convolve(data, kernel, mode='same')
+    return data_convolved
