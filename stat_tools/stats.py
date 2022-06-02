@@ -110,3 +110,22 @@ def pearson_cc_boostrap(data1, data2, nrands = 100):
     conf_68 = [sorted_pcorrs[int(nrands*.32)], sorted_pcorrs[int(nrands*.68)]]
     pcorr_resamples = np.mean(pcorrs)
     return pcorr, err, conf_95, conf_68, pcorr_resamples
+
+def chi22p(chi2, dof):
+    """This method translates from chi square statistics
+    to p-value to get statistical significancy.
+
+    Parameters:
+    -----------
+    chi2: float
+        Value of chi square
+    dof: int
+        Number of degrees of freedom
+
+    Returns:
+    --------
+    p: float
+        P-value of statistical significance of the difference
+    """
+    p = 1 - sci_stats.chi2.cdf(17, 10)
+    return p
