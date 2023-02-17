@@ -2,7 +2,8 @@ import numpy as np
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 
-def poisson_regression(x, y, verbose = False, show = True, c = None, ls = '--', lw = 2):
+def regression(x, y, family = 'poisson', verbose = False, show = True, \
+                       c = None, ls = '--', lw = 2):
     """
     This method applies a Poisson regression model.
 
@@ -12,6 +13,8 @@ def poisson_regression(x, y, verbose = False, show = True, c = None, ls = '--', 
         Array of x values.
     y: np.array
         Array of y values.
+    family: str {'poisson', 'binomial'}
+        It specifies the family of the regression.
     verbose: bool
         It specifies if information is printed out.
     show: bool
@@ -25,15 +28,18 @@ def poisson_regression(x, y, verbose = False, show = True, c = None, ls = '--', 
 
     Returns:
     --------
-    result_Poisson: statsmodels GLM model
+    result_glm: statsmodels GLM model
         GLM model obtained
     """
     x_glm = sm.add_constant(x)
-    result_Poisson=sm.GLM(y, x_glm, family=sm.families.Poisson()).fit()
+    if family == 'poisson':
+        result_glm=sm.GLM(y, x_glm, family=sm.families.Poisson()).fit()
+    elif family == 'binomial':
+        result_glm=sm.GLM(y, x_glm, family=sm.families.Binomial()).fit()
     if verbose:
-        print(result_Poisson.summary())
+        print(result_glm.summary())
     if show:
         x_plot = np.linspace(np.min(x), np.max(x),100)
         x_plot_pred = sm.add_constant(x_plot)
-        plt.plot(x_plot, result_Poisson.predict(x_plot_pred), c = c, linestyle = ls, lw = lw)
-    return result_Poisson
+        plt.plot(x_plot, result_glm.predict(x_plot_pred), c = c, linestyle = ls, lw = lw)
+    return result_glm
