@@ -1,7 +1,7 @@
 # Spatial Tools
 
 > Author: **Arnau Pujol**  
-> Year: **2020**  
+> Year: **2023**  
 > Version: **1.0**  
 
 This repository contains tools for statistical analyses.
@@ -11,6 +11,7 @@ Software requirements:
 All the packages that are required so that all the codes can run are:
 - numpy
 - scipy
+- pandas
 
 Installation:
 ----------------------

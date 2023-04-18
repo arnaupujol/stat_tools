@@ -1,6 +1,7 @@
 #This module contains methods for error and covariance analyses.
 
 import numpy as np
+import scipy.special as sci_esp
 
 def vec_cov(x, y, normed = False):
     """
