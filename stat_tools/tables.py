@@ -57,6 +57,7 @@ def count_time_label(dataframe, time_label, label, time_bins = 5, \
         table_sizes['Total'] = dataframe[label].value_counts().to_dict()
         table_sizes['Total']['Total'] = dataframe[label].value_counts().sum()
     table_sizes = pd.DataFrame(table_sizes, dtype = int).T
+    table_sizes[table_sizes.isnull()] = 0
     return table_sizes
 
 def labels_2d(dataframe, label_1, label_2, show_total = False, ignore_nulls = True):
@@ -133,4 +134,5 @@ def labels_nd(dataframe, label_1, label_list, show_total = False, ignore_nulls =
                                right_index = True, how = 'outer')
             if show_total:
                 table_sizes = table_sizes.rename(columns={'Total' : 'Total ' + l})
+    table_sizes[table_sizes.isnull()] = 0
     return table_sizes
