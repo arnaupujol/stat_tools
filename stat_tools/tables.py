@@ -96,6 +96,7 @@ def labels_2d(dataframe, label_1, label_2, show_total = False, ignore_nulls = Tr
         table_sizes['Total'] = dataframe[label_2].value_counts().to_dict()
         table_sizes['Total']['Total'] = dataframe[label_2].value_counts().sum()
     table_sizes = pd.DataFrame(table_sizes).T
+    table_sizes[table_sizes.isnull()] = 0
     return table_sizes
 
 def labels_nd(dataframe, label_1, label_list, show_total = False, ignore_nulls = True):
