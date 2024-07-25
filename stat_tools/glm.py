@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def regression(x, y, family = 'poisson', verbose = False, show = True, \
                        c = None, ls = '--', lw = 2):
     """
-    This method applies a Poisson regression model.
+    This method applies a Poisson or binomial regression model.
 
     Parameters:
     -----------
